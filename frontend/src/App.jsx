@@ -7,6 +7,8 @@ import LoginPage from './pages/LoginPage.jsx';
 import { ProtectedRoute } from './components/ProtectedRoute.jsx';
 import { Secret } from './pages/Secret.jsx';
 import { AuthProvider } from './hooks/useAuth.jsx';
+import TemplatePage from './pages/TemplatePage.jsx';
+import UserCreationPage from './pages/UserCreationPage.jsx';
 
 function App() {
 
@@ -19,6 +21,8 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/templates" element={<TemplatePage />} />
+          <Route path="create-user" element={<UserCreationPage />} />
           <Route path="/secret" element={
             <ProtectedRoute>
               <Secret/>
