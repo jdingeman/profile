@@ -1,20 +1,29 @@
 import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
+//import { useAuth } from '../hooks/useAuth';
+import PropTypes from 'prop-types';
 
-function LoginPage() {
+async function loginUser(credentials) {
+  return fetch('http://localhost:5000/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+  .then(data => data.json());
+}
+
+function LoginPage({ setToken }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useAuth();
+    //const { login } = useAuth();
     const handleLogin = async (e) => {
         e.preventDefault();
-
-        // TODO MOCK EXAMPLE
-        if (email === "email@email.com" && password === "password") {
-            // TODO REPLACE WITH AUTH LOGIC
-            await login({ email });
-        } else {
-            alert("Invalid username or passsword");
-        }
+        const token = await loginUser({
+          email,
+          password
+        });
+        setToken(token);
     }
   return (
     <div className="h-screen flex min-h-full flex-1 flex-col justify-center align-middle px-6 py-12 lg:px-8">
@@ -104,6 +113,10 @@ function LoginPage() {
       </div>
     </div>
   );
+}
+
+LoginPage.propTypes = {
+  setToken: PropTypes.func.isRequired
 }
 
 export default LoginPage;

@@ -9,8 +9,16 @@ import { Secret } from './pages/Secret.jsx';
 import { AuthProvider } from './hooks/useAuth.jsx';
 import TemplatePage from './pages/TemplatePage.jsx';
 import UserCreationPage from './pages/UserCreationPage.jsx';
+import useToken from './hooks/useToken.js';
+import NewAccountPage from './pages/NewAccountPage.jsx';
 
 function App() {
+
+  const { token, setToken } = useToken();
+
+  if (!token) {
+    return <LoginPage setToken={setToken} />
+  }
 
   return (
     
@@ -20,9 +28,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/templates" element={<TemplatePage />} />
-          <Route path="create-user" element={<UserCreationPage />} />
+          <Route path="/create-user" element={<UserCreationPage />} />
+          <Route path="/new-account" element={<NewAccountPage />} />
           <Route path="/secret" element={
             <ProtectedRoute>
               <Secret/>
