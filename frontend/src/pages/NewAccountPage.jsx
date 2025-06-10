@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Route, Navigate, useNavigate } from 'react-router-dom';
 
 function NewAccountPage() {
     const [firstName, setFirstName] = useState();
@@ -9,6 +10,8 @@ function NewAccountPage() {
     const [password, setPassword] = useState();
     const [passwordConfirm, setPasswordConfirm] = useState();
     const [error, setError] = useState('');
+
+    const navigate = useNavigate();
 
     const validatePassword = () => {
         if (password !== passwordConfirm) {
@@ -24,14 +27,17 @@ function NewAccountPage() {
         event.preventDefault();
         if (validatePassword()) {
             try {
-                const res = await axios.post('http://localhost:5000/api/registerNewAccount', {
+                await axios.post('http://localhost:5000/api/registerNewAccount', {
                     firstName,
                     lastName,
                     email,
                     organization,
                     password
-                });
-                alert(res.data.message);
+                }).then((res) => {
+                    alert(res.data.message);
+                    navigate('/about');
+                })
+                
             } catch (err) {
                 console.error(err);
                 alert('Registration failed: ', err);

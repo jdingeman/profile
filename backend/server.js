@@ -16,21 +16,22 @@ app.use('/api/users', usersRoutes);
 app.post('/api/registerNewAccount', async (req, res) => {
     const {firstName, lastName, email, organization, password } = req.body;
 
+    // Create transaction connection to database
+    const connection = await pool.getConnection();
+    await connection.beginTransaction();
+
     try {
+        // Check if email is already in use
         const [existing] = await pool.query('SELECT * FROM user WHERE email = ?', [email]);
         if (existing.length > 0) return res.status(409).json({ message: 'Email already in use' });
 
-        console.log('Email not already in use');
-
+        // Hash user's input password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        console.log('Password encrypted:', hashedPassword);
-
+        // First, add company to database and get its companyId
         const [companyResult] = await pool.query('INSERT INTO company (name, type) VALUES (?, "CUSTOMER")', [
             [organization]
         ]);
-
-        console.log('Company insert result:', companyResult);
 
         const orgId = companyResult.insertId;
 
@@ -39,6 +40,7 @@ app.post('/api/registerNewAccount', async (req, res) => {
             return res.status(500).json({ message: 'Failed to create company' });
         }
 
+        // Add new user to database with found companyId and commit the transaction
         await pool.query('INSERT INTO user (firstName, lastName, email, companyId, password_hash) VALUES (?, ?, ?, ?, ?)', [
             firstName,
             lastName,
@@ -46,11 +48,16 @@ app.post('/api/registerNewAccount', async (req, res) => {
             orgId,
             hashedPassword
         ]);
-
+        await connection.commit();
         res.status(201).json({ message: 'User registered'  });
     } catch (err) {
+        // If error, rollback the transaction and don't persist data to database
         console.error('Registration error:', err);
+        await connection.rollback();
         res.status(500).json({ message: 'Registration failed' });
+    } finally {
+        await connection.end();
+        
     }
 });
 
