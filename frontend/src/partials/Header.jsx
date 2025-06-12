@@ -9,7 +9,8 @@ function Header(){
         <div className="header-nav">
             <nav>
                 <ul>
-                    <li><a href="/">Home</a></li>
+                    <li><a href="/">home</a></li>
+                    <li><a href="/about">about</a></li>
                 </ul>
             </nav>
         </div>

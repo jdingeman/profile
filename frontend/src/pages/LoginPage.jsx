@@ -34,7 +34,7 @@ function LoginPage({ setToken }) {
           className="mx-auto h-10 w-auto"
         />
         <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-          Grofile
+          Vertable
         </h2>
         <h3 className="mt-5 text-center text-l font-bold tracking-tight text-gray-900">Sign in to your account</h3>
       </div>

@@ -1,35 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
 @import "tailwindcss";
 
 .header{
     padding: 0;
+    margin-bottom: 5px;
+    height: 41px;
     text-align: center;
     align-items: center;
-    background: #04a96d;
+    background: #059212;
+    background: linear-gradient(180deg, rgba(5, 146, 18, 1) 0%, rgba(88, 173, 100, 1) 90%);
     color: white;
-    font-size: 25px;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
-    border: 2px solid red;
-    border-radius: 0 0 4px 4px;
+}
+
+.header-nav {
+    display: flex;
+    height: 100%;
 }
 
 .header-nav ul{
     display: flex;
-    gap: 20px;
-    border: 2px solid red;
+    font-family: "Lexend Deca", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    height: 100%;
 }
 
-.header-nav ul li {
-    border: 2px solid red;
+.header-nav ul li{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px 0 10px;
+    border-left: solid 1px black;
 }
 
+.header-nav ul li:hover {
+    background: #047d10;
+    transition: background 0.5s ease;
+}
+
+.header-nav a {
+    width: 100%;
+    height: 100%;
+}
 .company-logo{
-    width: 50px;
-    height: 50px;
-    border: 2px solid red;
+    height: 3em;
 }
 
 .cards-container{
+    padding: 10px;
+}
+
+.dashboard-body {
     padding: 10px;
 }

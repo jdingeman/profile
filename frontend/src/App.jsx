@@ -11,6 +11,7 @@ import TemplatePage from './pages/TemplatePage.jsx';
 import UserCreationPage from './pages/UserCreationPage.jsx';
 import useToken from './hooks/useToken.js';
 import NewAccountPage from './pages/NewAccountPage.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 
 function App() {
 
@@ -26,6 +27,8 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/templates" element={<TemplatePage />} />
